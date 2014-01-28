@@ -606,6 +606,7 @@ endif()
 	
 set(nativeExtra)
 set(nativeExtraLibs)
+set(nativeExtraLibsHack)
 if(ANDROID)
 	set(nativeExtra ${nativeExtra}
 		native/base/NativeApp.h
@@ -655,7 +656,7 @@ elseif(SDL_FOUND)
 		SDL/SDLJoystick.h
 		SDL/SDLJoystick.cpp
 		native/base/PCMain.cpp)
-	set(nativeExtraLibs ${nativeExtraLibs} ${SDL_LIBRARIES})
+	set(nativeExtraLibsHack ${SDL_LIBRARIES})
 	if(APPLE)
 		set(nativeExtra ${nativeExtra} SDL/SDLMain.h SDL/SDLMain.mm)
 		set(nativeExtraLibs ${nativeExtraLibs} ${COCOA_LIBRARY})
@@ -830,6 +831,7 @@ add_library(native STATIC
 	native/ext/jpge/jpge.cpp
 	native/ext/jpge/jpge.h)
 include_directories(native)
+target_link_libraries(native ${nativeExtraLibsHack})
 
 if(APPLE OR BLACKBERRY)
 	SET(RT_LIB)
